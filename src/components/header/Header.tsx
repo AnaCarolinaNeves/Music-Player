@@ -8,14 +8,14 @@ function Header() {
         <li>
           <a href="/"><span className="mr-2">Player</span>
             <span className="ml-auto">
-              <Headphones size={32} />
+              <MusicPlayerFill size={32} />
             </span>
           </a>
         </li>
 
         <li>
-          <a href="/MySongs">
-            <MusicPlayerFill size={25} /> My songs
+          <a href="/addSong">
+            <Headphones size={25} /> Add Song
           </a>
         </li>
       </ul>

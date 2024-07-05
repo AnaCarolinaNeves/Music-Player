@@ -6,8 +6,8 @@ function Rotas() {
     return (
         <>
             <Routes>
-                <Route path="/" element={<AddSong />} />
-                <Route path="/mySongs" element={<MySong />} />
+                <Route path="/" element={<MySong />} />
+                <Route path="/addSong" element={<AddSong />} />
             </Routes>
         </>
     )

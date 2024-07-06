@@ -1,4 +1,4 @@
-import './index.css';
+import './header.css';
 import { MusicPlayerFill, Headphones } from 'react-bootstrap-icons';
 
 function Header() {
@@ -6,16 +6,15 @@ function Header() {
     <nav id="menu-nav">
       <ul>
         <li>
-          <a href="/"><span className="mr-2">Player</span>
-            <span className="ml-auto">
-              <MusicPlayerFill size={32} />
-            </span>
+          <a href="/">
+            <span className="mr-2">Player</span>
+            <MusicPlayerFill size={28} className="icon" />
           </a>
         </li>
-
         <li>
           <a href="/addSong">
-            <Headphones size={25} /> Add Song
+            <span className="ml-2">Add Song</span>
+            <Headphones size={32} className="icon" />
           </a>
         </li>
       </ul>

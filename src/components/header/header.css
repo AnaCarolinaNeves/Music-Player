@@ -1,0 +1,32 @@
+/* Definições básicas para o header */
+#menu-nav {
+    background-color: #a28ac2;
+    width: 100%;
+}
+
+#menu-nav ul {
+    max-width: 800px;
+    margin: 0 auto;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#menu-nav ul li {
+    display: flex;
+    align-items: center;
+}
+
+#menu-nav ul li a {
+    color: #FFF;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+#menu-nav ul li .icon {
+    margin-left: 10px; /* Espaçamento entre o texto e o ícone */
+}

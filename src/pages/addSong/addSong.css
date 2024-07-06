@@ -12,6 +12,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 15px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .uploaded {
@@ -57,6 +59,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 15px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .bottom-right-button {

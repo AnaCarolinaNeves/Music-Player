@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Header from '../../components/header/Header';
-import './index.css';
+import './addSong.css';
 import { PlusCircleDotted, MusicNote } from 'react-bootstrap-icons';
 import { Button, Form } from 'react-bootstrap';
 

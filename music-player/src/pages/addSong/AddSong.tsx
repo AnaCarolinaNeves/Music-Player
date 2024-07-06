@@ -1,10 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Header from '../../components/header/Header';
 import './addSong.css';
 import { PlusCircleDotted, MusicNote } from 'react-bootstrap-icons';
 import { Button, Form } from 'react-bootstrap';
+import axios from 'axios';
+import { URI } from '../../enumerations/uri';
 
 function AddSong() {
+
+
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [selectedAudio, setSelectedAudio] = useState<File | null>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);

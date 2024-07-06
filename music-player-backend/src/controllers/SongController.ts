@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import  AppDataSource from '../data-source';
+import AppDataSource from '../data-source';
 import { Song } from '../entities/Song';
+import { MulterRequest } from '../../custom';
 
 // Repositório para a entidade Song
 const songRepository = AppDataSource.getRepository(Song);
@@ -26,9 +27,17 @@ export const getSongById = async (req: Request, res: Response): Promise<Response
     }
 };
 
-export const addSong = async (req: Request, res: Response): Promise<Response> => {
+export const addSong = async (req: MulterRequest, res: Response): Promise<Response> => {
     try {
-        const newSong = songRepository.create(req.body);
+        const { artista, title, album } = req.body;
+        const imgPath = req.files?.imgPath?.[0].path;
+        const audioPath = req.files?.audioPath?.[0].path;
+
+        if (!artista || !title || !album || !imgPath || !audioPath) {
+            return res.status(400).json({ message: 'Todos os campos são obrigatórios' });
+        }
+
+        const newSong = songRepository.create({ artista, title, album, imgPath, audioPath });
         await songRepository.save(newSong);
         return res.status(201).json(newSong);
     } catch (error) {

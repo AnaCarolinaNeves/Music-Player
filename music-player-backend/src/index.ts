@@ -15,5 +15,4 @@ app.use(songRoutes);
 const PORT = process.env.PORT || 3001;
 
 // inicializa o servidor na porta especificada
-app.listen(PORT, () => (`Rodando na porta ${PORT}`));
-// define a rota para o pacote /routes
+app.listen(PORT, () => console.log(`Rodando na porta ${PORT}`));

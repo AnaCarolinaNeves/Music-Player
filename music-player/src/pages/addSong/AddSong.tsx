@@ -1,18 +1,20 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import Header from '../../components/header/Header';
+import { useNavigate } from 'react-router-dom';
 import './addSong.css';
 import { PlusCircleDotted, MusicNote } from 'react-bootstrap-icons';
 import { Button, Form } from 'react-bootstrap';
-import axios from 'axios';
-import { URI } from '../../enumerations/uri';
+import { api, URI } from '../../enumerations/uri';
 
 function AddSong() {
-
-
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [selectedAudio, setSelectedAudio] = useState<File | null>(null);
+  const [artista, setArtist] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
+  const [album, setAlbum] = useState<string>('');
   const imageInputRef = useRef<HTMLInputElement>(null);
   const audioInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -37,6 +39,34 @@ function AddSong() {
       audioInputRef.current.click();
     }
   };
+
+  const handleSave = async () => {
+    if (selectedImage && selectedAudio && artista && title && album) {
+      const formData = new FormData();
+      formData.append('artista', artista);
+      formData.append('title', title);
+      formData.append('album', album);
+      formData.append('imgPath', selectedImage);
+      formData.append('audioPath', selectedAudio);
+
+      try {
+        const response = await api.post(URI.ADD_SONG, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        console.log('Música adicionada:', response.data);
+        alert('Música adicionada com sucesso!');
+        navigate('/');
+      } catch (error) {
+        console.error('Erro ao adicionar música:', error);
+        alert('Erro ao adicionar música.');
+      }
+    } else {
+      alert('Por favor, preencha todos os campos e selecione os arquivos.');
+    }
+  };
+
 
   return (
     <>
@@ -66,17 +96,32 @@ function AddSong() {
           <Form>
             <Form.Group className="mb-5" controlId="formBasicArtist">
               <Form.Label>Artist</Form.Label>
-              <Form.Control type="text" placeholder="Artist's name" />
+              <Form.Control
+                type="text"
+                placeholder="Artist's name"
+                value={artista}
+                onChange={(e) => setArtist(e.target.value)}
+              />
             </Form.Group>
 
             <Form.Group className="mb-5" controlId="formBasicTitle">
               <Form.Label>Title</Form.Label>
-              <Form.Control type="text" placeholder="Song's title" />
+              <Form.Control
+                type="text"
+                placeholder="Song's title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
             </Form.Group>
 
             <Form.Group className="mb-5" controlId="formBasicAlbum">
               <Form.Label>Album</Form.Label>
-              <Form.Control type="text" placeholder="Album's name" />
+              <Form.Control
+                type="text"
+                placeholder="Album's name"
+                value={album}
+                onChange={(e) => setAlbum(e.target.value)}
+              />
             </Form.Group>
           </Form>
         </div>
@@ -100,9 +145,9 @@ function AddSong() {
         </div>
 
         <div className='bottom-right-button'>
-          <Button variant="secondary">Save</Button>
+          <Button variant="secondary" onClick={handleSave}>Save</Button>
         </div>
-        
+
       </div>
     </>
   );

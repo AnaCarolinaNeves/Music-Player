@@ -1,17 +1,30 @@
-import { Router, Request, Response } from 'express';
-import cors = require("cors");
+import { Router } from 'express';
+import * as cors from 'cors';
+import * as multer from 'multer';
 import { getAllSongs, getSongById, addSong, updateSong, deleteSong } from '../controllers/SongController';
 
 const router = Router();
 
-router.use(cors());
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+};
+
+router.use(cors(corsOptions));
+
+const upload = multer({ dest: 'uploads/' }); // Configurar destino para arquivos
 
 router.get('/allSongs', getAllSongs);
 router.get('/song/:id', getSongById);
-router.post('/createSong', addSong);
+router.post('/createSong', upload.fields([
+    { name: 'imgPath', maxCount: 1 },
+    { name: 'audioPath', maxCount: 1 }
+]), addSong);
 router.put('/updateSong/:id', updateSong);
 router.delete('/deleteSong/:id', deleteSong);
 
-router.use((req: Request, res: Response) => res.json({ error: "Requisição desconhecida" }));
+router.use((req, res) => res.json({ error: "Requisição desconhecida" }));
 
 export default router;

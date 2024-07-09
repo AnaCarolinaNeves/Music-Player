@@ -1,18 +1,22 @@
 import * as express from "express";
 import * as dotenv from "dotenv";
+import * as path from "path";
 import songRoutes from "./routes/song";
 
 dotenv.config();
 
-// cria o servidor e coloca na variável app
 const app = express();
 
-// suporta parâmetros JSON no body da requisição
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
+
+// Servir arquivos estáticos da pasta de uploads
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 app.use(songRoutes);
 
-const PORT = process.env.PORT || 3001;
+// Middleware para tratar requisições desconhecidas
+app.use((req, res) => res.json({ error: "Requisição desconhecida" }));
 
-// inicializa o servidor na porta especificada
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Rodando na porta ${PORT}`));

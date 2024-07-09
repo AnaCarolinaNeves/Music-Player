@@ -30,12 +30,16 @@ export const getSongById = async (req: Request, res: Response): Promise<Response
 export const addSong = async (req: MulterRequest, res: Response): Promise<Response> => {
     try {
         const { artista, title, album } = req.body;
-        const imgPath = req.files?.imgPath?.[0].path;
-        const audioPath = req.files?.audioPath?.[0].path;
+        let imgPath = req.files?.imgPath?.[0].path;
+        let audioPath = req.files?.audioPath?.[0].path;
 
         if (!artista || !title || !album || !imgPath || !audioPath) {
             return res.status(400).json({ message: 'Todos os campos são obrigatórios' });
         }
+
+        // Corrigir os caminhos para usar barras normais
+        imgPath = imgPath.replace(/\\/g, '/');
+        audioPath = audioPath.replace(/\\/g, '/');
 
         const newSong = songRepository.create({ artista, title, album, imgPath, audioPath });
         await songRepository.save(newSong);

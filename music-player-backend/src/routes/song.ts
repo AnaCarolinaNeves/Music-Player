@@ -14,7 +14,7 @@ const corsOptions = {
 
 router.use(cors(corsOptions));
 
-const upload = multer({ dest: 'uploads/' }); // Configurar destino para arquivos
+const upload = multer({ dest: 'uploads/' }); 
 
 router.get('/allSongs', getAllSongs);
 router.get('/song/:id', getSongById);

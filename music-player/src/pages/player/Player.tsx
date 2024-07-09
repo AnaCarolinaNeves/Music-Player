@@ -25,7 +25,7 @@ function Player() {
     useEffect(() => {
         const audioElement = document.getElementById('main-audio') as HTMLAudioElement;
         if (audioElement) {
-            audioElement.load(); // Carrega a nova música quando currentSongIndex muda
+            audioElement.load(); 
         }
     }, [currentSongIndex]);
 

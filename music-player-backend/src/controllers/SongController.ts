@@ -3,7 +3,6 @@ import AppDataSource from '../data-source';
 import { Song } from '../entities/Song';
 import { MulterRequest } from '../../custom';
 
-// Repositório para a entidade Song
 const songRepository = AppDataSource.getRepository(Song);
 
 export const getAllSongs = async (req: Request, res: Response): Promise<Response> => {
@@ -37,7 +36,6 @@ export const addSong = async (req: MulterRequest, res: Response): Promise<Respon
             return res.status(400).json({ message: 'Todos os campos são obrigatórios' });
         }
 
-        // Corrigir os caminhos para usar barras normais
         imgPath = imgPath.replace(/\\/g, '/');
         audioPath = audioPath.replace(/\\/g, '/');
 

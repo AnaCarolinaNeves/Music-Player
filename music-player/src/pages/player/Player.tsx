@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/header/Header';
 import './player.css';
-import { Repeat, SkipStart, SkipEnd, Play, MusicNoteList, X } from 'react-bootstrap-icons';
+import { Repeat, SkipStart, SkipEnd, Play, Pause, MusicNoteList, X } from 'react-bootstrap-icons';
 import { api, URI } from '../../enumerations/uri'; 
 import { Song } from '../../types/song';
 
@@ -26,6 +26,7 @@ function Player() {
         const audioElement = document.getElementById('main-audio') as HTMLAudioElement;
         if (audioElement) {
             audioElement.load(); 
+            setIsPlaying(false);
         }
     }, [currentSongIndex]);
 
@@ -43,10 +44,12 @@ function Player() {
 
     const nextSongHandler = () => {
         setCurrentSongIndex((prevIndex) => (prevIndex + 1) % songs.length);
+        setIsPlaying(false);
     };
 
     const prevSongHandler = () => {
         setCurrentSongIndex((prevIndex) => (prevIndex - 1 + songs.length) % songs.length);
+        setIsPlaying(false);
     };
 
     const getFullPath = (path: string) => {
@@ -82,7 +85,7 @@ function Player() {
                             <i id="repeat-plist"><Repeat size={32} title="Playlist looped" /></i>
                             <i id="prev" onClick={prevSongHandler}><SkipStart size={32} /></i>
                             <div className="play-pause" onClick={playPauseHandler}>
-                                <i className="material-icons play"><Play size={32} /></i>
+                                {isPlaying ? <i className="material-icons play"><Pause size={32} /></i> : <i className="material-icons play"><Play size={32} /></i>}
                             </div>
                             <i id="next" onClick={nextSongHandler}><SkipEnd size={32} /></i>
                             <i id="more-music"><MusicNoteList size={32} /></i>

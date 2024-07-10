@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Header from '../../components/header/Header';
 import './player.css';
-import { Repeat, SkipStart, SkipEnd, Play, Pause, MusicNoteList, X } from 'react-bootstrap-icons';
+import { SkipStart, SkipEnd, Play, Pause } from 'react-bootstrap-icons';
 import { api, URI } from '../../enumerations/uri';
 import { Song } from '../../types/song';
 
@@ -35,7 +35,6 @@ function Player() {
             };
 
             const handleEnded = () => {
-                // Avançar para a próxima música
                 setCurrentSongIndex((prevIndex) => (prevIndex + 1) % songs.length);
             };
 
@@ -60,7 +59,6 @@ function Player() {
                 const playPromise = audioElement.play();
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
-                        // Autoplay started
                     }).catch((error) => {
                         console.error('Erro ao iniciar a reprodução:', error);
                     });
@@ -92,12 +90,12 @@ function Player() {
 
     const nextSongHandler = () => {
         setCurrentSongIndex((prevIndex) => (prevIndex + 1) % songs.length);
-        setIsPlaying(true); // Iniciar automaticamente a próxima música
+        setIsPlaying(true);
     };
 
     const prevSongHandler = () => {
         setCurrentSongIndex((prevIndex) => (prevIndex - 1 + songs.length) % songs.length);
-        setIsPlaying(true); // Iniciar automaticamente a música anterior
+        setIsPlaying(true);
     };
 
     const getFullPath = (path: string) => {
@@ -142,32 +140,11 @@ function Player() {
                             </div>
                         </div>
                         <div className="controls">
-                            <i id="repeat-plist"><Repeat size={32} title="Playlist looped" /></i>
                             <i id="prev" onClick={prevSongHandler}><SkipStart size={32} /></i>
                             <div className="play-pause" onClick={playPauseHandler}>
                                 {isPlaying ? <i className="material-icons play"><Pause size={32} /></i> : <i className="material-icons play"><Play size={32} /></i>}
                             </div>
                             <i id="next" onClick={nextSongHandler}><SkipEnd size={32} /></i>
-                            <i id="more-music"><MusicNoteList size={32} /></i>
-                        </div>
-                        <div className="music-list">
-                            <div className="header">
-                                <div className="row">
-                                    <i className="list"><MusicNoteList size={32} /></i>
-                                    <span>Music list</span>
-                                </div>
-                                <i id="close"><X size={32} />close</i>
-                            </div>
-                            <ul>
-                                {songs.map((song, index) => (
-                                    <li key={index} onClick={() => setCurrentSongIndex(index)}>
-                                        <div className="row">
-                                            <span>{song.title}</span>
-                                            <p>{song.artista}</p>
-                                        </div>
-                                    </li>
-                                ))}
-                            </ul>
                         </div>
                     </div>
                 </div>
